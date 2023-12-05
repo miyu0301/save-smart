@@ -9,3 +9,41 @@ datasource db {
   provider = "sqlite"
   url      = env("DATABASE_URL")
 }
+
+model User {
+  id        String   @id @default(uuid())
+  name      String
+  password  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Shop {
+  id        String   @id @default(uuid())
+  userId    String
+  shopName  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Category {
+  id           String   @id @default(uuid())
+  userId       String
+  categoryName String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model PriceRecord {
+  id         String    @id @default(uuid())
+  userId     String
+  itemName   String
+  price      Int
+  unit       String?
+  memo       String?
+  categoryId String?
+  shopId     String?
+  deletedAt  DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+}
