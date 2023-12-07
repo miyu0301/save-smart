@@ -52,7 +52,7 @@ const page = () => {
           <input type="text" name="email" required />
           <label htmlFor="password">Password</label>
           <input type="password" name="password" required />
-          <Link href='/' className="border border-zinc-100 text-zinc-100 px-2 py-1 text-center hover:bg-zinc-900">Cancel</Link>
+          <Link href='/' className="">Cancel</Link>
           <button type="submit" className='text-zinc-100'>Sign up</button>
         </form>
       </div>
