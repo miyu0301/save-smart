@@ -13,7 +13,6 @@ const saveCategoryName = async (formData: FormData) => {
   }
   const res = await prisma.category.create({
     data: {
-      userId: 'test',
       categoryName: name,
     }
   })
@@ -49,7 +48,6 @@ const page = async () => {
   try {
     cateogories = await prisma.category.findMany({
       where: {
-        // userId: id,
         deletedAt: null,
       }
     })      

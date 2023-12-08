@@ -21,7 +21,7 @@ model User {
 
 model Shop {
   id        String    @id @default(uuid())
-  userId    String
+  // userId    String
   shopName  String
   deletedAt DateTime?
   createdAt DateTime  @default(now())
@@ -30,7 +30,7 @@ model Shop {
 
 model Category {
   id           String    @id @default(uuid())
-  userId       String
+  // userId       String
   categoryName String
   deletedAt    DateTime?
   createdAt    DateTime  @default(now())
@@ -39,7 +39,7 @@ model Category {
 
 model PriceRecord {
   id         String   @id @default(uuid())
-  userId     String
+  // userId     String
   itemName   String
   price      Int
   unit       String?
