@@ -1,6 +1,6 @@
-'use client'
+"use client";
 import React, { useEffect, useState } from "react";
-import Layout from "@/components/Layout"
+import Layout from "@/components/Layout";
 
 const page = () => {
   const [price, setPrice] = useState(0);
@@ -29,54 +29,53 @@ const page = () => {
   }, [price, amount, radioValue]);
 
   return (
-    
     <Layout pageTitle="Calculator">
       <h2 className="mb-4">Calculate</h2>
-          <label>$</label>
-          <input
-            type="number"
-            value={price}
-            onChange={(e) => setPrice(Number(e.target.value))}
-          ></input>
-          <label>per</label>
-          <input
-            type="number"
-            value={amount}
-            onChange={(e) => setAmount(Number(e.target.value))}
-          ></input>
-          <div>
-            {radios.map((radio, idx) => (
-              <button
-                key={idx}
-                id={`radio-${idx}`}
-                name="radio"
-                value={radio.value}
-                onClick={(e) => {
-                  setUnitName(radio.display);
-                  setUnitValue(radio.unitValue);
-                  setRadioValue(Number(e.currentTarget.value));
-                }}
-              >
-                {radio.name}
-              </button>
-            ))}
-          </div>
-          <p className="" id="display-price">
-            $ {showPrice} per {unitName}
-          </p>
+      <label>$</label>
+      <input
+        type="number"
+        value={price}
+        onChange={(e) => setPrice(Number(e.target.value))}
+      ></input>
+      <label>per</label>
+      <input
+        type="number"
+        value={amount}
+        onChange={(e) => setAmount(Number(e.target.value))}
+      ></input>
+      <div>
+        {radios.map((radio, idx) => (
           <button
-            className="my-3"
-            onClick={() => {
-              setPrice(0);
-              setAmount(1);
-              setUnitName("item");
-              setRadioValue(0);
+            key={idx}
+            id={`radio-${idx}`}
+            name="radio"
+            value={radio.value}
+            onClick={(e) => {
+              setUnitName(radio.display);
+              setUnitValue(radio.unitValue);
+              setRadioValue(Number(e.currentTarget.value));
             }}
           >
-            Clear
+            {radio.name}
           </button>
+        ))}
+      </div>
+      <p className="" id="display-price">
+        $ {showPrice} per {unitName}
+      </p>
+      <button
+        className="my-3"
+        onClick={() => {
+          setPrice(0);
+          setAmount(1);
+          setUnitName("item");
+          setRadioValue(0);
+        }}
+      >
+        Clear
+      </button>
     </Layout>
-  )
-}
+  );
+};
 
-export default page
+export default page;

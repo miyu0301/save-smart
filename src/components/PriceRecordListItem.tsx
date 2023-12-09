@@ -7,6 +7,7 @@ import { useState } from "react";
 type PriceRecordItemProps = {
   key: number;
   id: string;
+  image: string;
   itemName: string;
   price: number;
   unit: string;
@@ -21,6 +22,7 @@ type PriceRecordItemProps = {
 const PriceRecordListItem = ({
   key,
   id,
+  image,
   itemName,
   price,
   unit,
@@ -33,6 +35,7 @@ const PriceRecordListItem = ({
 }: PriceRecordItemProps) => {
   return (
     <div key={key} className="">
+      <img src={image} />
       <p className="">{itemName}</p>
       <p className="">{price}</p>
       <p className="">{unit}</p>

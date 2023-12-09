@@ -14,6 +14,7 @@ const onDelete = async (id: string) => {
 const page = async () => {
   let priceRecords: any[] = [];
   priceRecords = await prisma.priceRecord.findMany();
+  console.log(priceRecords);
 
   let categoryNames: {} = {};
   type categoryTable = {

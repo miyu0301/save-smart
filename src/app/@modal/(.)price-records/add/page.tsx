@@ -1,13 +1,11 @@
 import React from "react";
-import Layout from "@/components/Layout";
 import prisma from "@/db";
 import { redirect } from "next/navigation";
-import PriceRecordListItem from "@/components/PriceRecordListItem";
-import { revalidatePath } from "next/cache";
 import Link from "next/link";
 
 const addPriceRecord = async (formData: FormData) => {
   "use server";
+  const image = formData.get("image")?.valueOf();
   const name = formData.get("name")?.valueOf();
   const price = formData.get("price")?.valueOf();
   const unit = formData.get("unit")?.valueOf();
@@ -22,17 +20,41 @@ const addPriceRecord = async (formData: FormData) => {
     throw new Error();
   }
 
-  await prisma.priceRecord.create({
-    data: {
-      itemName: name,
-      price: Number(price),
-      unit: unit as string | null,
-      memo: memo as string | null,
-      categoryId: categoryId as string | null,
-      shopId: shopId as string | null,
-    },
-  });
-  redirect("/price-records");
+  if (image instanceof File) {
+    const formData = new FormData();
+    formData.append("file", image);
+    formData.append("upload_preset", process.env.CLOUDINARY_UPLOAD_PRESET!);
+    formData.append("cloud_name", process.env.CLOUDINARY_CLOUD_NAME!);
+    const response = await fetch(process.env.CLOUDINARY_UPLOAD_URL!, {
+      method: "post",
+      body: formData,
+    });
+    const data = await response.json();
+    await prisma.priceRecord.create({
+      data: {
+        itemName: name,
+        price: Number(price),
+        unit: unit as string | null,
+        memo: memo as string | null,
+        categoryId: categoryId as string | null,
+        shopId: shopId as string | null,
+        image: data.url,
+      },
+    });
+    redirect("/price-records");
+  } else {
+    await prisma.priceRecord.create({
+      data: {
+        itemName: name,
+        price: Number(price),
+        unit: unit as string | null,
+        memo: memo as string | null,
+        categoryId: categoryId as string | null,
+        shopId: shopId as string | null,
+      },
+    });
+    redirect("/price-records");
+  }
 };
 
 const page = async () => {
@@ -56,6 +78,7 @@ const page = async () => {
     <div className="flex justify-center items-center bg-black bg-opacity-60 p-5 fixed top-0 left-0 h-full w-full">
       <div className="bg-white text-zinc-900 p-3 w-96">
         <form action={addPriceRecord} className="">
+          <input type="file" name="image"></input>
           <label htmlFor="name">Product Name</label>
           <input type="text" name="name" required />
           <label htmlFor="price">Price</label>
