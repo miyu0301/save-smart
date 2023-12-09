@@ -1,11 +1,11 @@
-import Link from 'next/link'
+import Link from "next/link";
 
 const Footer = () => {
   return (
     <div className="">
       <menu className="">
         <li>
-          <Link href="/price-tracker">Price Tracker</Link>
+          <Link href="/price-records">Price Records</Link>
         </li>
         <li>
           <Link href="/calculator">Calculator</Link>
@@ -15,7 +15,7 @@ const Footer = () => {
         </li>
       </menu>
     </div>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

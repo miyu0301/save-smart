@@ -32,7 +32,7 @@ const addPriceRecord = async (formData: FormData) => {
       shopId: shopId as string | null,
     },
   });
-  redirect("/price-tracker");
+  redirect("/price-records");
 };
 
 const page = async () => {

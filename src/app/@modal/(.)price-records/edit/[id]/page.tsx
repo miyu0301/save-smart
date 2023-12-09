@@ -38,7 +38,7 @@ const page = async ({ params }: { params: { id: string } }) => {
         shopId: shopId as string | null,
       },
     });
-    redirect("/price-tracker");
+    redirect("/price-records");
   };
 
   let cateogories: any[] = [];
