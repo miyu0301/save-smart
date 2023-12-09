@@ -2,16 +2,8 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import Layout from "@/components/Layout";
-import PriceRecordListItem from "@/components/PriceRecordListItem";
-import { revalidatePath } from "next/cache";
 import prisma from "@/db";
 import PriceRecordList from "@/components/PriceRecordList";
-
-// const onDelete = async (id: string) => {
-//   "use server";
-//   await prisma.priceRecord.delete({ where: { id } });
-//   revalidatePath("/price-records");
-// };
 
 const page = async () => {
   // const [displayPriceRecords, setDisplayPriceRecords] = useState<any[]>([]);
@@ -90,18 +82,6 @@ const page = async () => {
         categoryNames={categoryNames}
         shopNames={shopNames}
       />
-
-      {/* <div>
-        {priceRecords.map((priceRecord, key) => (
-          <PriceRecordListItem
-            itemKey={key}
-            {...priceRecord}
-            categoryNames={categoryNames}
-            shopNames={shopNames}
-            onDelete={onDelete}
-          />
-        ))}
-      </div> */}
     </Layout>
   );
 };
