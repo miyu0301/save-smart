@@ -35,10 +35,10 @@ const addPriceRecord = async (formData: FormData) => {
 };
 
 const page = async () => {
-  let cateogories: any[] = [];
+  let categories: any[] = [];
   let shops: any[] = [];
   try {
-    cateogories = await prisma.category.findMany({
+    categories = await prisma.category.findMany({
       where: {
         deletedAt: null,
       },
@@ -65,7 +65,7 @@ const page = async () => {
           <input type="text" name="memo" />
           <label htmlFor="category">category</label>
           <select name="category" id="category" className="">
-            {cateogories.map((category) => (
+            {categories.map((category) => (
               <option key={category.id} value={category.id}>
                 {category.categoryName}
               </option>

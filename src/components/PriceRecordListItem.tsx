@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache";
 import { useState } from "react";
 
 type PriceRecordItemProps = {
-  key: number;
+  itemKey: number;
   id: string;
   image: string;
   itemName: string;
@@ -20,7 +20,7 @@ type PriceRecordItemProps = {
 };
 
 const PriceRecordListItem = ({
-  key,
+  itemKey,
   id,
   image,
   itemName,
@@ -34,7 +34,7 @@ const PriceRecordListItem = ({
   onDelete,
 }: PriceRecordItemProps) => {
   return (
-    <div key={key} className="">
+    <div key={itemKey} className="">
       <img src={image} />
       <p className="">{itemName}</p>
       <p className="">{price}</p>

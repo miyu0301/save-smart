@@ -1,17 +1,20 @@
-import React from "react";
+// "use client";
+import React, { useState } from "react";
 import Link from "next/link";
 import Layout from "@/components/Layout";
 import PriceRecordListItem from "@/components/PriceRecordListItem";
 import { revalidatePath } from "next/cache";
 import prisma from "@/db";
+import PriceRecordList from "@/components/PriceRecordList";
 
-const onDelete = async (id: string) => {
-  "use server";
-  await prisma.priceRecord.delete({ where: { id } });
-  revalidatePath("/price-records");
-};
+// const onDelete = async (id: string) => {
+//   "use server";
+//   await prisma.priceRecord.delete({ where: { id } });
+//   revalidatePath("/price-records");
+// };
 
 const page = async () => {
+  // const [displayPriceRecords, setDisplayPriceRecords] = useState<any[]>([]);
   let priceRecords: any[] = [];
   priceRecords = await prisma.priceRecord.findMany();
   console.log(priceRecords);
@@ -21,7 +24,7 @@ const page = async () => {
     id: string;
     categoryName: string;
   };
-  const categories = await prisma.category.findMany({
+  const categories: any[] = await prisma.category.findMany({
     where: { deletedAt: null },
   });
   categoryNames = categories.reduce(function (
@@ -38,7 +41,9 @@ const page = async () => {
     id: string;
     shopName: string;
   };
-  const shops = await prisma.shop.findMany({ where: { deletedAt: null } });
+  const shops: any[] = await prisma.shop.findMany({
+    where: { deletedAt: null },
+  });
   shopNames = shops.reduce(function (
     acc: { [key: string]: string },
     cur: shopTable
@@ -50,21 +55,53 @@ const page = async () => {
 
   return (
     <Layout pageTitle="Price Records">
+      {/* <form action={applyCondition} className=""> */}
+      <form className="">
+        <select name="category" id="category" className="">
+          {categories.map((category, key) => (
+            <option key={key} value={category.id}>
+              {category.categoryName}
+            </option>
+          ))}
+        </select>
+        <label htmlFor="shop-name">shop name</label>
+        <select name="shop-name" id="shop-name" className="">
+          {shops.map((shop, key) => (
+            <option key={key} value={shop.id}>
+              {shop.shopName}
+            </option>
+          ))}
+        </select>
+        <select name="price-order" id="price-order" className="">
+          <option value="0">asc</option>
+          <option value="1">desc</option>
+        </select>
+        <button type="submit" className="">
+          Apply
+        </button>
+      </form>
+
       <div className="">
         tracker page
         <Link href="/price-records/add">Add</Link>
       </div>
-      <div>
+      <PriceRecordList
+        priceRecords={priceRecords}
+        categoryNames={categoryNames}
+        shopNames={shopNames}
+      />
+
+      {/* <div>
         {priceRecords.map((priceRecord, key) => (
           <PriceRecordListItem
-            key={key}
+            itemKey={key}
             {...priceRecord}
             categoryNames={categoryNames}
             shopNames={shopNames}
             onDelete={onDelete}
           />
         ))}
-      </div>
+      </div> */}
     </Layout>
   );
 };
