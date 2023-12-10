@@ -4,7 +4,7 @@ import Link from "next/link";
 import Layout from "@/components/Layout";
 import prisma from "@/db";
 import PriceRecordList from "@/components/PriceRecordList";
-// import { deletePriceRecord } from "@/components/deletePriceRecord";
+import { deletePriceRecord } from "@/components/deletePriceRecord";
 import { redirect } from "next/navigation";
 // import { useRouter } from "next/router";
 
@@ -35,7 +35,7 @@ const page = () => {
       const priceRecords = await fetchRecordResponse.json();
       setAllPriceRecords(priceRecords);
       setDisplayPriceRecords(priceRecords);
-      setIsDeleted(true);
+      setIsDeleted(false);
     };
     fetchDisplayDatas();
   }, [isDeleted]);
@@ -68,8 +68,8 @@ const page = () => {
 
   const onDelete = async (id: string) => {
     try {
-      await fetch(`/api/deletePriceRecord/${id}`, { method: "DELETE" });
-      setIsDeleted(!isDeleted);
+      deletePriceRecord(id);
+      setIsDeleted(true);
     } catch (error) {
       console.error("Error deleting record", error);
     }

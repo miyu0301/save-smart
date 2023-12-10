@@ -44,10 +44,10 @@ async function getShops() {
   return shopNames
 }
 
-async function deletePriceRecord(id: string) {
-  await prisma.priceRecord.delete({ where: { id } });
-  // revalidatePath("/price-records");
-}
+// async function deletePriceRecord(id: string) {
+//   await prisma.priceRecord.delete({ where: { id } });
+//   // revalidatePath("/price-records");
+// }
 
 export default async function handler(
   req: NextApiRequest,
@@ -68,15 +68,15 @@ export default async function handler(
       case 'shops':
         data = await getShops();
         break;
-      case 'deletePriceRecord':
-        if (req.method === 'DELETE') {
-          const { id } = req.body;
-          await deletePriceRecord(id);
-          res.status(204).end();
-        } else {
-          data = await getPriceRecords();
-        }
-        break;
+      // case 'deletePriceRecord':
+      //   if (req.method === 'DELETE') {
+      //     const { id } = req.body;
+      //     await deletePriceRecord(id);
+      //     res.status(204).end();
+      //   } else {
+      //     data = await getPriceRecords();
+      //   }
+      //   break;
       default:
       res.status(400).json({ message: 'Invalid query parameter' });
       return;
