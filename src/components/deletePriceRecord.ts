@@ -4,5 +4,5 @@ import { revalidatePath } from "next/cache";
 
 export const deletePriceRecord = async (id: string) => {
   await prisma.priceRecord.delete({ where: { id } });
-  revalidatePath("/price-records");
+  // revalidatePath("/price-records");
 };

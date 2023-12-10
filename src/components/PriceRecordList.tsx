@@ -8,12 +8,14 @@ type PriceRecordListProps = {
   priceRecords: any[];
   categoryNames: { [key: string]: string };
   shopNames: { [key: string]: string };
+  deletePriceRecord: (id: string) => Promise<void>;
 };
 
 const PriceRecordList = ({
   priceRecords,
   categoryNames,
   shopNames,
+  deletePriceRecord,
 }: PriceRecordListProps) => {
   return (
     <div>
@@ -23,6 +25,7 @@ const PriceRecordList = ({
           {...priceRecord}
           categoryNames={categoryNames}
           shopNames={shopNames}
+          deletePriceRecord={deletePriceRecord}
         />
       ))}
     </div>

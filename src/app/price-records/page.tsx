@@ -4,8 +4,12 @@ import Link from "next/link";
 import Layout from "@/components/Layout";
 import prisma from "@/db";
 import PriceRecordList from "@/components/PriceRecordList";
+// import { deletePriceRecord } from "@/components/deletePriceRecord";
+import { redirect } from "next/navigation";
+// import { useRouter } from "next/router";
 
 const page = () => {
+  // const router = useRouter();
   const [categoryNames, setCategories] = useState<{ [key: number]: string }>(
     {}
   );
@@ -15,6 +19,7 @@ const page = () => {
   const [selectedCategoryId, setSelectedCategoryId] = useState("0");
   const [selectedShopId, setSelectedShopId] = useState("0");
   const [selectedOrder, setSelectedOrder] = useState("0");
+  const [isDeleted, setIsDeleted] = useState(false);
 
   useEffect(() => {
     const fetchDisplayDatas = async () => {
@@ -30,9 +35,10 @@ const page = () => {
       const priceRecords = await fetchRecordResponse.json();
       setAllPriceRecords(priceRecords);
       setDisplayPriceRecords(priceRecords);
+      setIsDeleted(true);
     };
     fetchDisplayDatas();
-  }, []);
+  }, [isDeleted]);
 
   const applyFilter = () => {
     const isFilteringCategory = selectedCategoryId !== "0";
@@ -58,6 +64,15 @@ const page = () => {
       filteredRecords.sort((a, b) => b.itemName.localeCompare(a.itemName));
     }
     setDisplayPriceRecords(filteredRecords);
+  };
+
+  const onDelete = async (id: string) => {
+    try {
+      await fetch(`/api/deletePriceRecord/${id}`, { method: "DELETE" });
+      setIsDeleted(!isDeleted);
+    } catch (error) {
+      console.error("Error deleting record", error);
+    }
   };
 
   return (
@@ -119,6 +134,7 @@ const page = () => {
         priceRecords={displayPriceRecords}
         categoryNames={categoryNames}
         shopNames={shopNames}
+        deletePriceRecord={onDelete}
       />
     </Layout>
   );

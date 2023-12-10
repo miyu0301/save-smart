@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { deletePriceRecord } from "./deletePriceRecord";
+// import { deletePriceRecord } from "./deletePriceRecord";
 
 type PriceRecordItemProps = {
   itemKey: number;
@@ -14,6 +14,7 @@ type PriceRecordItemProps = {
   shopId: string;
   categoryNames: { [key: string]: string };
   shopNames: { [key: string]: string };
+  deletePriceRecord: (id: string) => Promise<void>;
 };
 
 const PriceRecordListItem = ({
@@ -28,6 +29,7 @@ const PriceRecordListItem = ({
   shopId,
   categoryNames,
   shopNames,
+  deletePriceRecord,
 }: PriceRecordItemProps) => {
   return (
     <div key={itemKey} className="">
