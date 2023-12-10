@@ -4,23 +4,23 @@ import prisma from "@/db";
 import CategoryListItem from "@/components/SettingListItem";
 import { revalidatePath } from "next/cache";
 
-const saveCategoryName = async (formData: FormData) => {
+const saveShopName = async (formData: FormData) => {
   "use server";
   const name = formData.get("name")?.valueOf();
 
   if (typeof name !== "string" || name.length === 0) {
     throw new Error();
   }
-  const res = await prisma.category.create({
+  const res = await prisma.shop.create({
     data: {
-      categoryName: name,
+      shopName: name,
     },
   });
-  revalidatePath("/setting/category");
+  revalidatePath("/setting/shop-name");
 };
 const onDelete = async (id: string) => {
   "use server";
-  await prisma.category.update({
+  await prisma.shop.update({
     where: {
       id: id,
     },
@@ -28,25 +28,25 @@ const onDelete = async (id: string) => {
       deletedAt: new Date(),
     },
   });
-  revalidatePath("/setting/category");
+  revalidatePath("/setting/shop-name");
 };
 const onEdit = async (id: string, name: string) => {
   "use server";
-  await prisma.category.update({
+  await prisma.shop.update({
     where: {
       id: id,
     },
     data: {
-      categoryName: name,
+      shopName: name,
     },
   });
-  revalidatePath("/setting/category");
+  revalidatePath("/setting/shop-name");
 };
 
 const page = async () => {
-  let cateogories: any[] = [];
+  let shops: any[] = [];
   try {
-    cateogories = await prisma.category.findMany({
+    shops = await prisma.shop.findMany({
       where: {
         deletedAt: null,
       },
@@ -58,19 +58,19 @@ const page = async () => {
   return (
     <Layout pageTitle="Setting Category">
       <div className="">
-        <form action={saveCategoryName} className="">
-          <label htmlFor="name">Category Name</label>
+        <form action={saveShopName} className="">
+          <label htmlFor="name">Shop Name</label>
           <input type="text" name="name" required />
           <button type="submit" className="">
             Save
           </button>
         </form>
         <div>
-          {cateogories.map((category, key) => (
+          {shops.map((shop, key) => (
             <CategoryListItem
               key={key}
-              id={category.id}
-              itemName={category.categoryName}
+              id={shop.id}
+              itemName={shop.shopName}
               onDelete={onDelete}
               onEdit={onEdit}
             />
