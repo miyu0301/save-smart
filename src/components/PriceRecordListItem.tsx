@@ -1,8 +1,6 @@
 "use client";
 import Link from "next/link";
-import prisma from "@/db";
-import { revalidatePath } from "next/cache";
-import { useState } from "react";
+import { deletePriceRecord } from "./deletePriceRecord";
 
 type PriceRecordItemProps = {
   itemKey: number;
@@ -16,7 +14,6 @@ type PriceRecordItemProps = {
   shopId: string;
   categoryNames: { [key: string]: string };
   shopNames: { [key: string]: string };
-  onDelete: (id: string) => void;
 };
 
 const PriceRecordListItem = ({
@@ -31,7 +28,6 @@ const PriceRecordListItem = ({
   shopId,
   categoryNames,
   shopNames,
-  onDelete,
 }: PriceRecordItemProps) => {
   return (
     <div key={itemKey} className="">
@@ -43,7 +39,7 @@ const PriceRecordListItem = ({
       <p className="">{categoryId ? categoryNames[categoryId] : ""}</p>
       <p className="">{shopId ? shopNames[shopId] : ""}</p>
       <Link href={`/price-records/edit/${id}`}>Edit</Link>
-      <button type="button" onClick={() => onDelete(id)} className="">
+      <button type="button" onClick={() => deletePriceRecord(id)} className="">
         Delete
       </button>
     </div>
